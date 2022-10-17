@@ -40,7 +40,7 @@ func (impl *MemberImpl) CreateMember(ctx context.Context, in *member.CreateMembe
 	}
 
 	if _, err := govalidator.ValidateStruct(checkAccountForm); err != nil {
-		return nil, common.ErrWrongAcountFormat
+		return nil, common.ErrWrongAccountFormat
 	}
 
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(in.Password), bcrypt.MinCost)
@@ -56,6 +56,7 @@ func (impl *MemberImpl) CreateMember(ctx context.Context, in *member.CreateMembe
 		RoleCode:     int32(in.RoleCode),
 		Status:       int32(in.Status),
 		VerifyStatus: int32(in.VerifyStatus),
+		GroupID:      uint64(in.GroupID),
 		CreatedAt:    time.Unix(in.CreatedAtUnix, 0),
 	})
 	if err != nil {
@@ -63,7 +64,7 @@ func (impl *MemberImpl) CreateMember(ctx context.Context, in *member.CreateMembe
 	}
 
 	return &member.CreateMemberRes{
-		Id: int32(id),
+		Id: int64(id),
 	}, nil
 }
 
@@ -104,6 +105,7 @@ func (impl *MemberImpl) GetMember(ctx context.Context, in *member.GetMemberReq) 
 			RoleCode:      member.RoleCodeType(model.RoleCode),
 			Status:        member.StatusType(model.Status),
 			VerifyStatus:  member.VerifyStatus(model.VerifyStatus),
+			GroupID:       int64(model.GroupID),
 			CreatedAtUnix: model.CreatedAt.Unix(),
 		},
 	}, nil

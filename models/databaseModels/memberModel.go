@@ -17,7 +17,7 @@ type MemberModel struct {
 	RoleCode     int32          `gorm:"column:role_code"`
 	Status       int32          `gorm:"column:status"`
 	VerifyStatus int32          `gorm:"column:verify_status"`
-	groupID      uint64         `gorm:"column:group_id"`
+	GroupID      uint64         `gorm:"column:group_id"`
 	CreatedAt    time.Time      `gorm:"column:created_at"`
 	UpdatedAt    time.Time      `gorm:"column:updated_at"`
 	DeletedAt    gorm.DeletedAt `gorm:"column:deleted_at"`

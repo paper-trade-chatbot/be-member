@@ -20,7 +20,7 @@ CREATE TABLE `member` (
     UNIQUE INDEX (`account`),
     FOREIGN KEY (`group_id`) REFERENCES member_group(`id`),
     PRIMARY KEY(`id`)
-) CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='會員資料';
+) AUTO_INCREMENT=1 CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='會員資料';
 
 -- +migrate Down
 SET FOREIGN_KEY_CHECKS=0;

@@ -17,14 +17,14 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/jinzhu/now v1.1.5
 	github.com/newrelic/go-agent v3.19.2+incompatible
-	github.com/paper-trade-chatbot/be-common v0.0.0-20221005074733-b1d2b201585c
-	github.com/paper-trade-chatbot/be-proto v0.0.0-20221005030755-5db4685e12f5
+	github.com/paper-trade-chatbot/be-common v0.0.0-20221017064643-74841e410773
+	github.com/paper-trade-chatbot/be-proto v0.0.0-20221017071743-9f5bd4c34feb
 	github.com/shopspring/decimal v1.3.1
 	github.com/spf13/cast v1.5.0
 	github.com/tinylib/msgp v1.1.6
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
 	golang.org/x/net v0.0.0-20221002022538-bcab6841153b
-	google.golang.org/grpc v1.49.0
+	google.golang.org/grpc v1.50.1
 	gorm.io/driver/mysql v1.3.6
 	gorm.io/gorm v1.23.10
 )
@@ -67,7 +67,7 @@ require (
 	golang.org/x/time v0.0.0-20220722155302-e5dcc9cfc0b9 // indirect
 	google.golang.org/api v0.95.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20220930163606-c98284e70a91 // indirect
+	google.golang.org/genproto v0.0.0-20221014213838-99cd37c6964a // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

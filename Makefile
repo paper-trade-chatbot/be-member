@@ -31,8 +31,8 @@ build:
 	docker tag lisyaoran51/${SERVICE_NAME}:${GIT_COMMIT_HASH} lisyaoran51/${SERVICE_NAME}
 	docker push lisyaoran51/${SERVICE_NAME}
 
-rollout:
-	kubectl set image deployment ${SERVICE_NAME}-deployment <container>=${SERVICE_NAME}/${SERVICE_NAME}:${GIT_COMMIT_HASH} --record
+rollout: build
+	kubectl set image deployment ${SERVICE_NAME}-deployment ${SERVICE_NAME}=lisyaoran51/${SERVICE_NAME}:${GIT_COMMIT_HASH} --record
 
 proto:
 	go get -u github.com/paper-trade-chatbot/be-proto

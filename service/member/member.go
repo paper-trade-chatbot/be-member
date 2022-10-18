@@ -34,7 +34,7 @@ func (impl *MemberImpl) CreateMember(ctx context.Context, in *member.CreateMembe
 	db := database.GetDB()
 
 	checkAccountForm := struct {
-		Account string `valid:"account~account:6-12" json:"account"`
+		Account string `valid:"stringlength(6|12)" json:"account"`
 	}{
 		Account: in.Account,
 	}

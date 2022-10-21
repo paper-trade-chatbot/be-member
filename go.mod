@@ -18,7 +18,7 @@ require (
 	github.com/jinzhu/now v1.1.5
 	github.com/newrelic/go-agent v3.19.2+incompatible
 	github.com/paper-trade-chatbot/be-common v0.0.0-20221017064643-74841e410773
-	github.com/paper-trade-chatbot/be-proto v0.0.0-20221017071743-9f5bd4c34feb
+	github.com/paper-trade-chatbot/be-proto v0.0.0-20221019070121-8506ee0ffe68
 	github.com/shopspring/decimal v1.3.1
 	github.com/spf13/cast v1.5.0
 	github.com/tinylib/msgp v1.1.6

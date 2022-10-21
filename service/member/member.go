@@ -8,6 +8,7 @@ import (
 	common "github.com/paper-trade-chatbot/be-common"
 	"github.com/paper-trade-chatbot/be-member/dao/memberDao"
 	"github.com/paper-trade-chatbot/be-member/database"
+	"github.com/paper-trade-chatbot/be-member/logging"
 	"github.com/paper-trade-chatbot/be-member/models/databaseModels"
 	"github.com/paper-trade-chatbot/be-proto/member"
 	"golang.org/x/crypto/bcrypt"
@@ -33,6 +34,8 @@ func New() MemberIntf {
 func (impl *MemberImpl) CreateMember(ctx context.Context, in *member.CreateMemberReq) (*member.CreateMemberRes, error) {
 	db := database.GetDB()
 
+	logging.Info("CreateMember: %s %s %s", in.Account, in.Password, in.Mail, in.GroupID)
+
 	checkAccountForm := struct {
 		Account string `valid:"stringlength(6|12)" json:"account"`
 	}{
@@ -46,6 +49,10 @@ func (impl *MemberImpl) CreateMember(ctx context.Context, in *member.CreateMembe
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(in.Password), bcrypt.MinCost)
 	if err != nil {
 		return nil, err
+	}
+
+	if in.GroupID == 0 {
+		in.GroupID = 1
 	}
 
 	id, err := memberDao.New(db, databaseModels.MemberModel{

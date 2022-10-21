@@ -18,7 +18,7 @@ CREATE TABLE `member` (
     
     UNIQUE INDEX (`mail`),
     UNIQUE INDEX (`account`),
-    FOREIGN KEY (`group_id`) REFERENCES member_group(`id`),
+    FOREIGN KEY (`group_id`) REFERENCES member_group(`id`) ON DELETE CASCADE,
     PRIMARY KEY(`id`)
 ) AUTO_INCREMENT=1 CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='會員資料';
 

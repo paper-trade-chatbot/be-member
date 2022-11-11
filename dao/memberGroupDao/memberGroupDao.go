@@ -1,4 +1,4 @@
-package memberDao
+package memberGroupDao
 
 import (
 	"errors"

@@ -7,6 +7,7 @@ import (
 	"github.com/asaskevich/govalidator"
 	common "github.com/paper-trade-chatbot/be-common"
 	"github.com/paper-trade-chatbot/be-member/dao/memberDao"
+	"github.com/paper-trade-chatbot/be-member/dao/memberGroupDao"
 	"github.com/paper-trade-chatbot/be-member/database"
 	"github.com/paper-trade-chatbot/be-member/logging"
 	"github.com/paper-trade-chatbot/be-member/models/databaseModels"
@@ -21,6 +22,9 @@ type MemberIntf interface {
 	ModifyMember(ctx context.Context, in *member.ModifyMemberReq) (*member.ModifyMemberRes, error)
 	ResetPassword(ctx context.Context, in *member.ResetPasswordReq) (*member.ResetPasswordRes, error)
 	DeleteMember(ctx context.Context, in *member.DeleteMemberReq) (*member.DeleteMemberRes, error)
+	CreateMemberGroup(ctx context.Context, in *member.CreateMemberGroupReq) (*member.CreateMemberGroupRes, error)
+	GetMemberGroups(ctx context.Context, in *member.GetMemberGroupsReq) (*member.GetMemberGroupsRes, error)
+	DeleteMemberGroup(ctx context.Context, in *member.DeleteMemberGroupReq) (*member.DeleteMemberGroupRes, error)
 }
 
 type MemberImpl struct {
@@ -55,12 +59,11 @@ func (impl *MemberImpl) CreateMember(ctx context.Context, in *member.CreateMembe
 		in.GroupID = 1
 	}
 
-	id, err := memberDao.New(db, databaseModels.MemberModel{
+	_, err = memberDao.New(db, databaseModels.MemberModel{
 		Account:      in.Account,
 		PasswordHash: string(passwordHash),
 		Mail:         in.Mail,
 		LineID:       in.LineID,
-		RoleCode:     int32(in.RoleCode),
 		Status:       int32(in.Status),
 		VerifyStatus: int32(in.VerifyStatus),
 		GroupID:      uint64(in.GroupID),
@@ -70,9 +73,7 @@ func (impl *MemberImpl) CreateMember(ctx context.Context, in *member.CreateMembe
 		return nil, err
 	}
 
-	return &member.CreateMemberRes{
-		Id: int64(id),
-	}, nil
+	return &member.CreateMemberRes{}, nil
 }
 
 func (impl *MemberImpl) GetMember(ctx context.Context, in *member.GetMemberReq) (*member.GetMemberRes, error) {
@@ -109,7 +110,6 @@ func (impl *MemberImpl) GetMember(ctx context.Context, in *member.GetMemberReq) 
 			LineID:        model.LineID,
 			CountryCode:   model.CountryCode,
 			Phone:         model.Phone,
-			RoleCode:      member.RoleCodeType(model.RoleCode),
 			Status:        member.StatusType(model.Status),
 			VerifyStatus:  member.VerifyStatus(model.VerifyStatus),
 			GroupID:       int64(model.GroupID),
@@ -132,5 +132,45 @@ func (impl *MemberImpl) ResetPassword(ctx context.Context, in *member.ResetPassw
 }
 
 func (impl *MemberImpl) DeleteMember(ctx context.Context, in *member.DeleteMemberReq) (*member.DeleteMemberRes, error) {
+	return nil, common.ErrNotImplemented
+}
+
+func (impl *MemberImpl) CreateMemberGroup(ctx context.Context, in *member.CreateMemberGroupReq) (*member.CreateMemberGroupRes, error) {
+	return nil, common.ErrNotImplemented
+}
+
+func (impl *MemberImpl) GetMemberGroups(ctx context.Context, in *member.GetMemberGroupsReq) (*member.GetMemberGroupsRes, error) {
+	db := database.GetDB()
+
+	queryModel := &memberGroupDao.QueryModel{}
+
+	if in.Id != nil {
+		queryModel.ID = *in.Id
+	}
+	if in.Name != nil {
+		queryModel.Name = *in.Name
+	}
+
+	models, err := memberGroupDao.Gets(db, queryModel)
+	if err != nil {
+		return nil, err
+	}
+
+	res := &member.GetMemberGroupsRes{}
+
+	for _, m := range models {
+		memberGroup := &member.MemberGroup{
+			Id:        m.ID,
+			Name:      m.Name,
+			Memo:      m.Memo,
+			CreatedAt: m.CreatedAt.Unix(),
+		}
+		res.MemberGroups = append(res.MemberGroups, memberGroup)
+	}
+
+	return res, nil
+}
+
+func (impl *MemberImpl) DeleteMemberGroup(ctx context.Context, in *member.DeleteMemberGroupReq) (*member.DeleteMemberGroupRes, error) {
 	return nil, common.ErrNotImplemented
 }

@@ -8,7 +8,6 @@ CREATE TABLE `member` (
     `line_id` VARCHAR(30) COMMENT 'line帳號',
     `country_code` VARCHAR(4) COMMENT '手機國碼',
     `phone` VARCHAR(10) COMMENT '手機號碼',
-    `role_code` TINYINT(4) NOT NULL COMMENT '角色代號',
     `status` TINYINT(4) NOT NULL COMMENT '帳號狀態',
     `verify_status` TINYINT(4) NOT NULL COMMENT '驗證狀態',
     `group_id` BIGINT UNSIGNED NOT NULL COMMENT '組別id',

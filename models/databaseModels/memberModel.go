@@ -14,7 +14,6 @@ type MemberModel struct {
 	LineID       string         `gorm:"column:line_id"`
 	CountryCode  string         `gorm:"column:country_code"`
 	Phone        string         `gorm:"column:phone"`
-	RoleCode     int32          `gorm:"column:role_code"`
 	Status       int32          `gorm:"column:status"`
 	VerifyStatus int32          `gorm:"column:verify_status"`
 	GroupID      uint64         `gorm:"column:group_id"`

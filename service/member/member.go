@@ -105,6 +105,7 @@ func (impl *MemberImpl) GetMember(ctx context.Context, in *member.GetMemberReq) 
 
 	return &member.GetMemberRes{
 		Member: &member.Member{
+			Id:            model.ID,
 			Account:       model.Account,
 			Mail:          model.Mail,
 			LineID:        model.LineID,

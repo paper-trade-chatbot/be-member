@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"runtime/debug"
 
-	"github.com/paper-trade-chatbot/be-member/cache"
-	"github.com/paper-trade-chatbot/be-member/database"
+	"github.com/paper-trade-chatbot/be-common/cache"
+	"github.com/paper-trade-chatbot/be-common/database"
 	"github.com/paper-trade-chatbot/be-member/service/member"
 	memberGrpc "github.com/paper-trade-chatbot/be-proto/member"
 
@@ -17,10 +17,10 @@ import (
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 
-	"github.com/paper-trade-chatbot/be-member/config"
-	"github.com/paper-trade-chatbot/be-member/global"
-	"github.com/paper-trade-chatbot/be-member/logging"
-	"github.com/paper-trade-chatbot/be-member/server"
+	"github.com/paper-trade-chatbot/be-common/config"
+	"github.com/paper-trade-chatbot/be-common/global"
+	"github.com/paper-trade-chatbot/be-common/logging"
+	"github.com/paper-trade-chatbot/be-common/server"
 )
 
 func main() {
@@ -65,7 +65,7 @@ func main() {
 
 	recoveryOpt := grpc_recovery.WithRecoveryHandlerContext(
 		func(ctx context.Context, p interface{}) error {
-			logging.Error("[PANIC] %s\n\n%s", p, string(debug.Stack()))
+			logging.Error(ctx, "[PANIC] %s\n\n%s", p, string(debug.Stack()))
 			return status.Errorf(codes.Internal, "%s", p)
 		},
 	)
@@ -89,7 +89,7 @@ func main() {
 	httpServer := server.CreateHttpServer(ctx, address)
 
 	go func() {
-		logging.Info("grpc serving")
+		logging.Info(ctx, "grpc serving")
 		if err := grpc.Serve(*listener); err != nil {
 			panic(err)
 		}
@@ -100,9 +100,9 @@ func main() {
 	global.Ready = true
 
 	// Start servicing requests.
-	logging.Info("Initialization complete, listening on %s...", address)
+	logging.Info(ctx, "Initialization complete, listening on %s...", address)
 	if err := httpServer.ListenAndServe(); err != nil {
-		logging.Info(err.Error())
+		logging.Info(ctx, err.Error())
 	}
 
 }
